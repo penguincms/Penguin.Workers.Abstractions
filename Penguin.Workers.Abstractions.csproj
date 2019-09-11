@@ -4,9 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>http://www.penguinms.com/Nuget</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/penguincms/Penguin.Workers.Abstractions</PackageProjectUrl>
 	<PackageIconUrl>http://www.penguinms.com/client/images/pg.png</PackageIconUrl>
     <Version>1.2.10</Version>
+	<IncludeSymbols>true</IncludeSymbols>    
+<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <Description>Shared classes and interfaces for Penguin worker types enabling processes to be run from multiple entry points</Description>
     <PackageReleaseNotes>Now with comments</PackageReleaseNotes>
@@ -14,16 +17,16 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningsAsErrors>NU1605, CS1591</WarningsAsErrors>
-    <DocumentationFile>C:\SVN\Framework\Nuget\Penguin.WorkerProcess.Abstractions\Penguin.WorkerProcess.Abstractions.xml</DocumentationFile>
+    <DocumentationFile>Penguin.WorkerProcess.Abstractions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	<DebugType>full</DebugType>
-    <DocumentationFile>C:\SVN\Framework\Nuget\Penguin.WorkerProcess.Abstractions\Penguin.WorkerProcess.Abstractions.xml</DocumentationFile>
+    <DocumentationFile>Penguin.WorkerProcess.Abstractions.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\License.txt">
+    <None Include="License.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
