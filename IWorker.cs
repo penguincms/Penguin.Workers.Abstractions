@@ -7,8 +7,6 @@ namespace Penguin.Workers.Abstractions
     /// </summary>
     public interface IWorker
     {
-        #region Properties
-
         /// <summary>
         /// Denoted whether or not the worker is currently running
         /// </summary>
@@ -23,10 +21,6 @@ namespace Penguin.Workers.Abstractions
         /// The root path for the application launching the worker
         /// </summary>
         string WorkerRoot { get; set; }
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// The code to execute when the worker is run
@@ -49,7 +43,5 @@ namespace Penguin.Workers.Abstractions
         /// </summary>
         /// <param name="force">Optional parameter to force the worker to run</param>
         void UpdateSync(bool force = false);
-
-        #endregion Methods
     }
 }

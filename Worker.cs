@@ -11,8 +11,6 @@ namespace Penguin.Workers.Abstractions
     /// </summary>
     public abstract class Worker : IWorker
     {
-        #region Properties
-
         /// <summary>
         /// Directory where the configuration files for the worker should be stored
         /// </summary>
@@ -53,10 +51,6 @@ namespace Penguin.Workers.Abstractions
             }
         }
 
-        #endregion Properties
-
-        #region Constructors
-
         /// <summary>
         /// Creates a new instance of the worker class
         /// </summary>
@@ -70,10 +64,6 @@ namespace Penguin.Workers.Abstractions
             this.BackgroundWorker = new BackgroundWorker();
             this.BackgroundWorker.DoWork += this.Worker_DoWork;
         }
-
-        #endregion Constructors
-
-        #region Methods
 
         /// <summary>
         /// Retrieves a class instance of the worker configuration from the serialized file
@@ -175,15 +165,13 @@ namespace Penguin.Workers.Abstractions
             {
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
-                ExceptionDispatchInfo.Capture(ex).Throw();
+                throw;
             }
             finally
             {
                 this.IsBusy = false;
             }
         }
-
-        #endregion Methods
 
         internal bool AllowAsync { get; set; } = true;
         private string _workerRoot { get; set; }
