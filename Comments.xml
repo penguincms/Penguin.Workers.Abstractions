@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Penguin.Workers.Abstractions.Local</name>
+        <name>Penguin.Workers.Abstractions</name>
     </assembly>
     <members>
         <member name="T:Penguin.Workers.Abstractions.WorkerConfiguration">
