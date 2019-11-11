@@ -92,7 +92,7 @@ namespace Penguin.Workers.Abstractions
         /// <summary>
         /// Attempts to run the worker, if its not currently running
         /// </summary>
-        public void Run()
+        public void Run(params string[] args)
         {
             if (!this.BackgroundWorker.IsBusy)
             {
@@ -104,7 +104,7 @@ namespace Penguin.Workers.Abstractions
         /// <summary>
         /// Method to contain the logic that the worker executes
         /// </summary>
-        public abstract void RunWorker();
+        public abstract void RunWorker(params string[] args);
 
         /// <summary>
         /// Converts a class representation of the worker configuration into a string and saves it to a file
@@ -122,12 +122,12 @@ namespace Penguin.Workers.Abstractions
         /// Run the worker Async
         /// </summary>
         /// <param name="force">Force the worker to run if ahead of schedule</param>
-        public void UpdateAsync(bool force = false)
+        public void UpdateAsync(bool force = false, params string[] args)
         {
             if (!this.BackgroundWorker.IsBusy && (this.LastRun + this.Delay < DateTime.Now || this.LastRun == DateTime.MinValue || force))
             {
                 this.LastRun = DateTime.Now;
-                this.BackgroundWorker.RunWorkerAsync();
+                this.BackgroundWorker.RunWorkerAsync(args);
             }
         }
 
@@ -140,12 +140,12 @@ namespace Penguin.Workers.Abstractions
         /// Runs the worker synchronously
         /// </summary>
         /// <param name="force">Force the worker to run, if before the next scheduled time</param>
-        public void UpdateSync(bool force = false)
+        public void UpdateSync(bool force = false, params string[] args)
         {
             if (this.LastRun + this.Delay < DateTime.Now || this.LastRun == DateTime.MinValue || force)
             {
                 this.LastRun = DateTime.Now;
-                this.Worker_DoWork(null, null);
+                this.Worker_DoWork(null, new DoWorkEventArgs(args));
             }
         }
 
@@ -159,7 +159,7 @@ namespace Penguin.Workers.Abstractions
             try
             {
                 this.IsBusy = true;
-                this.RunWorker();
+                this.RunWorker(e.Argument as string[]);
             }
             catch (Exception ex)
             {

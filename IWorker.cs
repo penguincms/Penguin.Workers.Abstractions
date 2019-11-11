@@ -25,13 +25,13 @@ namespace Penguin.Workers.Abstractions
         /// <summary>
         /// The code to execute when the worker is run
         /// </summary>
-        void Run();
+        void Run(params string[] args);
 
         /// <summary>
         /// Code to launch the worker Async
         /// </summary>
         /// <param name="force">Optional parameter to force the worker to run</param>
-        void UpdateAsync(bool force = false);
+        void UpdateAsync(bool force = false, params string[] args);
 
         /// <summary>
         /// Call this after the worker has run and make it update the last run time wherever that is stored
@@ -42,6 +42,6 @@ namespace Penguin.Workers.Abstractions
         /// Code to launch the worker synchronously
         /// </summary>
         /// <param name="force">Optional parameter to force the worker to run</param>
-        void UpdateSync(bool force = false);
+        void UpdateSync(bool force = false, params string[] args);
     }
 }
