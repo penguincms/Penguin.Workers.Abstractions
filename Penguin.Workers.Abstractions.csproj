@@ -7,6 +7,7 @@
     <PackageReleaseNotes>Now with comments</PackageReleaseNotes>
     <AssemblyName>Penguin.Workers.Abstractions</AssemblyName>
     <RootNamespace>Penguin.Workers.Abstractions</RootNamespace>
+    <DocumentationFile>Penguin.Workers.Abstractions.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
