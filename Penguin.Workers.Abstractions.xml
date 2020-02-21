@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Penguin.Workers.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:Penguin.Workers.Abstractions.WorkerConfiguration">
+            <summary>
+            The base class for a worker configuration, used to enforce settings before running
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.WorkerConfiguration.Configured">
+            <summary>
+            A bool representing whether or not this worker configuration has been configured. Used to force the user to open and alter the configuration to prevent
+            default values from being overlooked. Will throw an error if not true
+            </summary>
+        </member>
+        <member name="T:Penguin.Workers.Abstractions.IWorker">
+            <summary>
+            An interface required to hook a class into the Worker system.
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.IWorker.IsBusy">
+            <summary>
+            Denoted whether or not the worker is currently running
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.IWorker.LastRun">
+            <summary>
+            The last time the worker was run
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.IWorker.WorkerRoot">
+            <summary>
+            The root path for the application launching the worker
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.IWorker.Run(System.String[])">
+            <summary>
+            The code to execute when the worker is run
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.IWorker.UpdateAsync(System.Boolean,System.String[])">
+            <summary>
+            Code to launch the worker Async
+            </summary>
+            <param name="force">Optional parameter to force the worker to run</param>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.IWorker.UpdateLastRun">
+            <summary>
+            Call this after the worker has run and make it update the last run time wherever that is stored
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.IWorker.UpdateSync(System.Boolean,System.String[])">
+            <summary>
+            Code to launch the worker synchronously
+            </summary>
+            <param name="force">Optional parameter to force the worker to run</param>
+        </member>
+        <member name="T:Penguin.Workers.Abstractions.Worker">
+            <summary>
+            The lowest implementation of a Worker object designed to create minumum functionality expected
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.Worker.ConfigDirectory">
+            <summary>
+            Directory where the configuration files for the worker should be stored
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.Worker.Delay">
+            <summary>
+            Represents the time between worker runs
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.Worker.IsBusy">
+            <summary>
+            Is the worker currently running
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.Worker.LastRun">
+            <summary>
+            The last run time if the worker has been kept in memory
+            </summary>
+        </member>
+        <member name="P:Penguin.Workers.Abstractions.Worker.WorkerRoot">
+            <summary>
+            The root path for the application currently that has this DLL loaded, and the base directory for all workers
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.#ctor">
+            <summary>
+            Creates a new instance of the worker class
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.GetConfiguration``1">
+            <summary>
+            Retrieves a class instance of the worker configuration from the serialized file
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.Run(System.String[])">
+            <summary>
+            Attempts to run the worker, if its not currently running
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.RunWorker(System.String[])">
+            <summary>
+            Method to contain the logic that the worker executes
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.SaveConfiguration``1(``0)">
+            <summary>
+            Converts a class representation of the worker configuration into a string and saves it to a file
+            </summary>
+            <typeparam name="T">Any WorkerConfiguration type</typeparam>
+            <param name="configuration">The configuration to save</param>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.UpdateAsync(System.Boolean,System.String[])">
+            <summary>
+            Run the worker Async
+            </summary>
+            <param name="force">Force the worker to run if ahead of schedule</param>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.UpdateLastRun">
+            <summary>
+            Placeholder for method used to update the last run time. Storage location depends on implementation
+            </summary>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.UpdateSync(System.Boolean,System.String[])">
+            <summary>
+            Runs the worker synchronously
+            </summary>
+            <param name="force">Force the worker to run, if before the next scheduled time</param>
+        </member>
+        <member name="M:Penguin.Workers.Abstractions.Worker.Worker_DoWork(System.Object,System.ComponentModel.DoWorkEventArgs)">
+            <summary>
+            Event handler to set the worker to busy and run. Use Update or UpdateSync
+            </summary>
+            <param name="sender">Not Used</param>
+            <param name="e">Not Used</param>
+        </member>
+    </members>
+</doc>
