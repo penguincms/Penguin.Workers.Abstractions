@@ -51,6 +51,12 @@ namespace Penguin.Workers.Abstractions
             }
         }
 
+        internal bool AllowAsync { get; set; } = true;
+
+        private string _workerRoot { get; set; }
+
+        private BackgroundWorker BackgroundWorker { get; set; }
+
         /// <summary>
         /// Creates a new instance of the worker class
         /// </summary>
@@ -156,6 +162,11 @@ namespace Penguin.Workers.Abstractions
         /// <param name="e">Not Used</param>
         public virtual void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            if (e is null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             try
             {
                 this.IsBusy = true;
@@ -172,9 +183,5 @@ namespace Penguin.Workers.Abstractions
                 this.IsBusy = false;
             }
         }
-
-        internal bool AllowAsync { get; set; } = true;
-        private string _workerRoot { get; set; }
-        private BackgroundWorker BackgroundWorker { get; set; }
     }
 }
