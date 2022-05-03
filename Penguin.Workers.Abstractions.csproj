@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
-    <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Workers.Abstractions</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/PenguinCms/Penguin.Workers.Abstractions</PackageProjectUrl>
     <Version>5.0.5</Version>
     <Description>Shared classes and interfaces for Penguin worker types enabling processes to be run from multiple entry points</Description>
     <PackageReleaseNotes>Now with comments</PackageReleaseNotes>
