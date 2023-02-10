@@ -31,6 +31,7 @@ namespace Penguin.Workers.Abstractions
         /// Code to launch the worker Async
         /// </summary>
         /// <param name="force">Optional parameter to force the worker to run</param>
+        /// <param name="args"></param>
         void UpdateAsync(bool force = false, params string[] args);
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace Penguin.Workers.Abstractions
         /// Code to launch the worker synchronously
         /// </summary>
         /// <param name="force">Optional parameter to force the worker to run</param>
+        /// <param name="args"></param>
         void UpdateSync(bool force = false, params string[] args);
     }
 }

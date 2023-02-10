@@ -45,6 +45,7 @@
             Code to launch the worker Async
             </summary>
             <param name="force">Optional parameter to force the worker to run</param>
+            <param name="args"></param>
         </member>
         <member name="M:Penguin.Workers.Abstractions.IWorker.UpdateLastRun">
             <summary>
@@ -56,6 +57,7 @@
             Code to launch the worker synchronously
             </summary>
             <param name="force">Optional parameter to force the worker to run</param>
+            <param name="args"></param>
         </member>
         <member name="T:Penguin.Workers.Abstractions.Worker">
             <summary>
@@ -121,6 +123,7 @@
             Run the worker Async
             </summary>
             <param name="force">Force the worker to run if ahead of schedule</param>
+            <param name="args"></param>
         </member>
         <member name="M:Penguin.Workers.Abstractions.Worker.UpdateLastRun">
             <summary>
@@ -132,6 +135,7 @@
             Runs the worker synchronously
             </summary>
             <param name="force">Force the worker to run, if before the next scheduled time</param>
+            <param name="args"></param>
         </member>
         <member name="M:Penguin.Workers.Abstractions.Worker.Worker_DoWork(System.Object,System.ComponentModel.DoWorkEventArgs)">
             <summary>

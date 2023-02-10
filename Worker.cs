@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.ExceptionServices;
 
 namespace Penguin.Workers.Abstractions
 {
@@ -14,7 +13,7 @@ namespace Penguin.Workers.Abstractions
         /// <summary>
         /// Directory where the configuration files for the worker should be stored
         /// </summary>
-        public string ConfigDirectory => Path.Combine(this.WorkerRoot, "Configs");
+        public string ConfigDirectory => Path.Combine(WorkerRoot, "Configs");
 
         /// <summary>
         /// Represents the time between worker runs
@@ -38,17 +37,11 @@ namespace Penguin.Workers.Abstractions
         {
             get
             {
-                if (_workerRoot is null)
-                {
-                    _workerRoot = Directory.GetCurrentDirectory();
-                }
+                _workerRoot ??= Directory.GetCurrentDirectory();
 
                 return _workerRoot;
             }
-            set
-            {
-                _workerRoot = value;
-            }
+            set => _workerRoot = value;
         }
 
         internal bool AllowAsync { get; set; } = true;
@@ -60,15 +53,15 @@ namespace Penguin.Workers.Abstractions
         /// <summary>
         /// Creates a new instance of the worker class
         /// </summary>
-        public Worker()
+        protected Worker()
         {
-            if (!Directory.Exists(this.ConfigDirectory))
+            if (!Directory.Exists(ConfigDirectory))
             {
-                Directory.CreateDirectory(this.ConfigDirectory);
+                _ = Directory.CreateDirectory(ConfigDirectory);
             }
 
-            this.BackgroundWorker = new BackgroundWorker();
-            this.BackgroundWorker.DoWork += this.Worker_DoWork;
+            BackgroundWorker = new BackgroundWorker();
+            BackgroundWorker.DoWork += Worker_DoWork;
         }
 
         /// <summary>
@@ -78,7 +71,7 @@ namespace Penguin.Workers.Abstractions
         /// <returns></returns>
         public T GetConfiguration<T>() where T : WorkerConfiguration
         {
-            string ConfigName = Path.Combine(this.ConfigDirectory, $"{this.GetType().Name}.localConfig");
+            string ConfigName = Path.Combine(ConfigDirectory, $"{GetType().Name}.localConfig");
 
             if (!File.Exists(ConfigName))
             {
@@ -87,12 +80,7 @@ namespace Penguin.Workers.Abstractions
 
             T Configuration = JsonConvert.DeserializeObject<T>(File.ReadAllText(ConfigName));
 
-            if (!Configuration.Configured)
-            {
-                throw new Exception("Configuration file not populated: " + ConfigName);
-            }
-
-            return Configuration;
+            return !Configuration.Configured ? throw new Exception("Configuration file not populated: " + ConfigName) : Configuration;
         }
 
         /// <summary>
@@ -100,10 +88,10 @@ namespace Penguin.Workers.Abstractions
         /// </summary>
         public void Run(params string[] args)
         {
-            if (!this.BackgroundWorker.IsBusy)
+            if (!BackgroundWorker.IsBusy)
             {
-                this.LastRun = DateTime.Now;
-                this.BackgroundWorker.RunWorkerAsync();
+                LastRun = DateTime.Now;
+                BackgroundWorker.RunWorkerAsync();
             }
         }
 
@@ -119,7 +107,7 @@ namespace Penguin.Workers.Abstractions
         /// <param name="configuration">The configuration to save</param>
         public void SaveConfiguration<T>(T configuration) where T : WorkerConfiguration
         {
-            string ConfigName = Path.Combine(this.ConfigDirectory, $"{this.GetType().Name}.localConfig");
+            string ConfigName = Path.Combine(ConfigDirectory, $"{GetType().Name}.localConfig");
 
             File.WriteAllText(ConfigName, JsonConvert.SerializeObject(configuration, Formatting.Indented));
         }
@@ -128,12 +116,13 @@ namespace Penguin.Workers.Abstractions
         /// Run the worker Async
         /// </summary>
         /// <param name="force">Force the worker to run if ahead of schedule</param>
+        /// <param name="args"></param>
         public void UpdateAsync(bool force = false, params string[] args)
         {
-            if (!this.BackgroundWorker.IsBusy && (this.LastRun + this.Delay < DateTime.Now || this.LastRun == DateTime.MinValue || force))
+            if (!BackgroundWorker.IsBusy && (LastRun + Delay < DateTime.Now || LastRun == DateTime.MinValue || force))
             {
-                this.LastRun = DateTime.Now;
-                this.BackgroundWorker.RunWorkerAsync(args);
+                LastRun = DateTime.Now;
+                BackgroundWorker.RunWorkerAsync(args);
             }
         }
 
@@ -146,12 +135,13 @@ namespace Penguin.Workers.Abstractions
         /// Runs the worker synchronously
         /// </summary>
         /// <param name="force">Force the worker to run, if before the next scheduled time</param>
+        /// <param name="args"></param>
         public void UpdateSync(bool force = false, params string[] args)
         {
-            if (this.LastRun + this.Delay < DateTime.Now || this.LastRun == DateTime.MinValue || force)
+            if (LastRun + Delay < DateTime.Now || LastRun == DateTime.MinValue || force)
             {
-                this.LastRun = DateTime.Now;
-                this.Worker_DoWork(null, new DoWorkEventArgs(args));
+                LastRun = DateTime.Now;
+                Worker_DoWork(null, new DoWorkEventArgs(args));
             }
         }
 
@@ -169,8 +159,8 @@ namespace Penguin.Workers.Abstractions
 
             try
             {
-                this.IsBusy = true;
-                this.RunWorker(e.Argument as string[]);
+                IsBusy = true;
+                RunWorker(e.Argument as string[]);
             }
             catch (Exception ex)
             {
@@ -180,7 +170,7 @@ namespace Penguin.Workers.Abstractions
             }
             finally
             {
-                this.IsBusy = false;
+                IsBusy = false;
             }
         }
     }
